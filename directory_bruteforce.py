@@ -16,7 +16,7 @@ def helplk():
     print("")
     print("%s -h"%(sys.argv[0]))
     print("%s --help"%(sys.argv[0]))
-    print("%s -u https://link.com -w /usr/share/wordlists/wfuzz/general/common.txt --save /home/ghost/Documents/directory.txt"%(sys.argv[0]))
+    print("%s -u https://www.site.com -w /usr/share/wordlists/wfuzz/general/common.txt --save /home/user/Documents/directory.txt"%(sys.argv[0]))
     sys.exit()
 
 if len(sys.argv) <=1:

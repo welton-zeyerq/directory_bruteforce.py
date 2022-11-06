@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import sys
+import time
 import logging
 try:
     import threading
@@ -16,7 +17,7 @@ def helplk():
     print("")
     print("%s -h"%(sys.argv[0]))
     print("%s --help"%(sys.argv[0]))
-    print("%s -u https://www.site.com -w /usr/share/wordlists/wfuzz/general/common.txt --save /home/user/Documents/directory.txt"%(sys.argv[0]))
+    print("%s -u https://link.com -w /usr/share/wordlists/wfuzz/general/common.txt --save /home/ghost/Documents/directory.txt"%(sys.argv[0]))
     sys.exit()
 
 if len(sys.argv) <=1:
@@ -67,19 +68,34 @@ try:
     logging.basicConfig(level=logging.INFO, filename=LOG, format="%(message)s")
 except Exception as error:
     print(error)
+    pass
 
 def brute(url, wordlist):
     for word in wordlist:
         url_final = "{}/{}".format(url, word.strip())
         print(url_final)
-        response = requests.get(url_final)
-        code = response.status_code
-        if code != 404:
-            logging.info("{} [code {}]".format(url_final, code))
-            print("{} [code {}]".format(url_final, code))
-        else:
-            logging.info("{} [code {}]".format(url_final, code))
-            print("{} [code {}]".format(url_final, code))
+        try:
+            response = requests.get(url_final)
+            code = response.status_code
+            if code != 404:
+                logging.info("{} [code {}]".format(url_final, code))
+                print("{} [code {}]".format(url_final, code))
+            else:
+                logging.info("{} [code {}]".format(url_final, code))
+                print("{} [code {}]".format(url_final, code))
+        except requests.exceptions.Timeout:
+            print("requests timeout")
+            time.sleep(10)
+            pass
+        except requests.exceptions.TooManyRedirects:
+            print("requests error")
+            pass
+        except requests.exceptions.RequestException as error:
+            print(error)
+            pass
+        except Exception as error:
+            print(error)
+            pass
     else:
         pass
 
@@ -91,7 +107,8 @@ def brute(url, wordlist):
                 print("threading error")
                 pass
         else:
-            print("error")
+            print("loop error")
+            pass
     except KeyboardInterrupt:
         sys.exit()
     except Exception as error:
@@ -109,4 +126,3 @@ except KeyboardInterrupt:
 except Exception as error:
     print(error)
     pass
-

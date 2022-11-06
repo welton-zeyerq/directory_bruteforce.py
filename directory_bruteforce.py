@@ -14,7 +14,7 @@ except:
 if len(sys.argv) !=4:
     print("follow the example: ")
     print("")
-    print("%s https://link.com /usr/share/wordlists/wfuzz/general/common.txt /home/ghost/Documents/directory.txt"%(sys.argv[0]))
+    print("%s https://link.com /usr/share/wordlists/wfuzz/general/common.txt /home/user/Documents/directory.txt"%(sys.argv[0]))
     sys.exit()
 
 LOG = sys.argv[3]

@@ -13,11 +13,12 @@ except:
     sys.exit("Install missing library: pip install requests")
 
 def helplk():
-    print("follow the example: ")
+    print("follow the examples: ")
     print("")
     print("%s -h"%(sys.argv[0]))
     print("%s --help"%(sys.argv[0]))
-    print("%s -u https://link.com -w /usr/share/wordlists/wfuzz/general/common.txt --save /home/ghost/Documents/directory.txt"%(sys.argv[0]))
+    print("%s -u https://www.site.com -w /usr/share/wordlists/wfuzz/general/common.txt --save /home/user/Documents/directory.txt"%(sys.argv[0]))
+    print("%s -u https://www.site.com -w /usr/share/wordlists/wordlist-dnsrecon.txt --save /home/user/Documents/directory.txt"%(sys.argv[0]))
     sys.exit()
 
 if len(sys.argv) <=1:
@@ -27,6 +28,9 @@ if len(sys.argv) <=1:
 elif len(sys.argv) ==2:
     choice = str(sys.argv[1])
     if choice == "-u":
+        print("insert valid url")
+        sys.exit()
+    elif choice == "--url":
         print("insert valid url")
         sys.exit()
     elif choice == "-h":
@@ -73,7 +77,7 @@ except Exception as error:
 def brute(url, wordlist):
     for word in wordlist:
         url_final = "{}/{}".format(url, word.strip())
-        print(url_final)
+#        print(url_final)
         try:
             response = requests.get(url_final)
             code = response.status_code
